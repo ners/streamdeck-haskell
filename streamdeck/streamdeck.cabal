@@ -1,0 +1,75 @@
+cabal-version:       3.0
+name:                streamdeck
+version:             0.1.0.0
+synopsis:            Streamdeck driver
+homepage:            https://github.com/ners/streamdeck-haskell/blob/master/streamdeck/README.md
+license:             Apache-2.0
+license-file:        LICENCE.md
+author:              ners
+maintainer:          ners@gmx.ch
+bug-reports:         https://github.com/ners/streamdeck-haskell/issues
+category:            System
+build-type:          Simple
+extra-source-files:  CHANGELOG.md, README.md
+
+source-repository head
+  type:     git
+  location: https://github.com/ners/streamdeck-haskell
+
+common common
+    default-language: GHC2021
+    ghc-options:
+        -Weverything
+        -Wno-all-missed-specialisations
+        -Wno-missing-export-lists
+        -Wno-missing-import-lists
+        -Wno-missing-safe-haskell-mode
+        -Wno-unsafe
+        -Wno-missing-kind-signatures
+    if impl(ghc >= 9.8)
+        ghc-options:
+            -Wno-missing-poly-kind-signatures
+            -Wno-missing-role-annotations
+    default-extensions:
+        ApplicativeDo
+        Arrows
+        BlockArguments
+        DataKinds
+        DefaultSignatures
+        DeriveAnyClass
+        DeriveGeneric
+        DerivingStrategies
+        DerivingVia
+        ExplicitNamespaces
+        LambdaCase
+        NoFieldSelectors
+        NoImplicitPrelude
+        OverloadedLabels
+        OverloadedRecordDot
+        OverloadedStrings
+        PackageImports
+        RecordWildCards
+        RecursiveDo
+        StrictData
+        TypeFamilies
+        ViewPatterns
+
+library
+    import:           common
+    hs-source-dirs:   src
+    exposed-modules:
+        System.Hardware.StreamDeck
+        System.Hardware.StreamDeck.StreamDeckMk2
+        System.Hardware.StreamDeck.StreamDeckPedal
+        System.Hardware.StreamDeck.StreamDeckPlus
+    other-modules:
+        Data.ByteString.Extra,
+        Prelude,
+    build-depends:
+        base >= 4 && < 5,
+        bytestring,
+        extra,
+        hidapi,
+        mtl,
+        transformers-base,
+        unliftio,

@@ -1,0 +1,95 @@
+cabal-version:       3.0
+name:                rhine-streamdeck
+version:             0.1.0.0
+synopsis:            Rhine frontend for the Streamdeck driver
+homepage:            https://github.com/ners/streamdeck-haskell/blob/master/rhine-streamdeck/README.md
+license:             Apache-2.0
+license-file:        LICENCE.md
+author:              ners
+maintainer:          ners@gmx.ch
+bug-reports:         https://github.com/ners/streamdeck-haskell/issues
+category:            System
+build-type:          Simple
+extra-source-files:  CHANGELOG.md, README.md
+
+source-repository head
+  type:     git
+  location: https://github.com/ners/streamdeck-haskell
+
+common common
+    default-language: GHC2021
+    ghc-options:
+        -Weverything
+        -Wno-all-missed-specialisations
+        -Wno-missing-export-lists
+        -Wno-missing-import-lists
+        -Wno-missing-kind-signatures
+        -Wno-missing-safe-haskell-mode
+        -Wno-unsafe
+    if impl(ghc >= 9.8)
+        ghc-options:
+            -Wno-missing-poly-kind-signatures
+            -Wno-missing-role-annotations
+    default-extensions:
+        ApplicativeDo
+        Arrows
+        BlockArguments
+        DataKinds
+        DefaultSignatures
+        DeriveAnyClass
+        DeriveGeneric
+        DerivingStrategies
+        DerivingVia
+        ExplicitNamespaces
+        LambdaCase
+        NoFieldSelectors
+        NoImplicitPrelude
+        OverloadedLabels
+        OverloadedRecordDot
+        OverloadedStrings
+        PackageImports
+        RecordWildCards
+        RecursiveDo
+        StrictData
+        TypeFamilies
+        ViewPatterns
+    build-depends:
+        base >= 4 && < 5,
+        bytestring,
+        mtl,
+        rhine,
+        streamdeck,
+        unliftio,
+
+library
+    import:           common
+    exposed-modules:
+        FRP.StreamDeck.ButtonEvents,
+        FRP.StreamDeck.DisplayButtonEvents,
+        FRP.StreamDeck.InputClock,
+        FRP.StreamDeck.KnobEvents,
+        FRP.StreamDeck.Layer,
+        FRP.StreamDeck.StreamDeckMk2Clock,
+        FRP.StreamDeck.StreamDeckPlusClock,
+    other-modules:
+        Prelude,
+    build-depends:
+        containers,
+        time,
+    hs-source-dirs:   src
+
+test-suite rhine-streamdeck-test
+    import:           common
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Main.hs
+    other-modules:
+        Image,
+        Prelude,
+        StreamDeckMk2,
+        StreamDeckPlus,
+        Teletubbies,
+    build-depends:
+        JuicyPixels,
+        JuicyPixels-extra,
+        rhine-streamdeck,
